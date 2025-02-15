@@ -33,4 +33,4 @@ public class AulaService {
 		log.info("alocar() FIM: ");
 		return repository.save(aula);
 	}
-}
+}	
