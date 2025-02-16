@@ -23,7 +23,8 @@ public class SalaService {
 	
 	public Sala alocar(Sala sala) {
 		log.info("alocar(): sala={} ", sala);
-		if(repository.existyByCodigo(sala.getCodigo())) {
+		//existy para exists
+		if(repository.existsByCodigo(sala.getCodigo())) {
 			log.error("alocar() ERRO: cadastro não realizado por já existir sala com o código definido.");
 			throw new RuntimeException("Código da sala já existe");
 		}

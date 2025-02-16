@@ -20,5 +20,5 @@ public class SalaMapper {
     
     public static List<SalaDto> toDTOList(List<Sala> salas) {
         return salas.stream().map(SalaMapper::toDTO).collect(Collectors.toList());
-    }
+    }	
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.ifba.pweb.dto.AulaDto;
+import br.com.ifba.pweb.mapper.AulaMapper;
 import br.com.ifba.pweb.repository.AulaRepository;
 import lombok.extern.slf4j.Slf4j;
 
@@ -17,12 +18,13 @@ public class AulaService {
 	private AulaRepository repository;
 	
 	public List<AulaDto> listar(){
-		return repository.findAll();
+		return AulaMapper.toDTOList(repository.findAll());
 	}
 	
 	public AulaDto alocar(AulaDto aula) {
 		log.info("alocar() aula={} ", aula);
-		List<AulaDto> aulas = repository.findBySalaIdAndDayWeek(aula.sala().getId(), aula.diaSemana());
+		//AndDayWeek para AndDiaSemana
+		List<AulaDto> aulas = AulaMapper.toDTOList(repository.findBySalaIdAndDiaSemana(aula.sala().getId(), aula.diaSemana()));
 		
 		for (AulaDto a : aulas) {
 			if(a.horarioInicio().equals(aula.horarioInicio())) {
@@ -31,6 +33,7 @@ public class AulaService {
 			}
 		}
 		log.info("alocar() FIM: ");
-		return repository.save(aula);
+		//transformando aula em entidade para armazenar e depois passando para DTO para dar o retorno
+		return AulaMapper.toDTO(repository.save(AulaMapper.toEntity(aula)));
 	}
 }	

@@ -10,5 +10,5 @@ import br.com.ifba.pweb.entity.Aula;
 //estava recebendo AulaDto
 public interface AulaRepository extends JpaRepository<Aula, Long> {
 	//mudei o método de DayWeek para DiaSemana(como está na entidade)
-	List<AulaDto> findBySalaIdAndDiaSemana(Long salaId, String diaSemana);
+	List<Aula> findBySalaIdAndDiaSemana(Long salaId, String diaSemana);
 }
