@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.ifba.pweb.dto.SalaDto;
 import br.com.ifba.pweb.entity.Sala;
 import br.com.ifba.pweb.repository.SalaRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -31,5 +32,15 @@ public class SalaService {
 		
 		log.info("alocar() FIM: ");
 		return repository.save(sala);
+	}
+
+	public SalaDto editar(SalaDto disciplina) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void excluir(SalaDto dto) {
+		// TODO Auto-generated method stub
+		
 	}
 }

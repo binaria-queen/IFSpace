@@ -3,8 +3,10 @@ package br.com.ifba.pweb.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,5 +40,16 @@ public class SalaController {
 		return SalaMapper.toDTO(service.alocar(sala));
 	}
 	
+	@PutMapping("/editar")
+	public SalaDto editar(SalaDto sala) {
+		log.info("editar() INICIO: ");
+		return service.editar(sala);
+	}
+	
+	@DeleteMapping("/excluir")
+	public void excluir(SalaDto dto) {
+		log.info("excluir() INICIO: ");
+		service.excluir(dto);
+	}
 	
 }

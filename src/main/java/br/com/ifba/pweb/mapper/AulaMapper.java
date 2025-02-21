@@ -1,13 +1,10 @@
 package br.com.ifba.pweb.mapper;
 
-import java.time.LocalTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import br.com.ifba.pweb.dto.AulaDto;
 import br.com.ifba.pweb.entity.Aula;
-import br.com.ifba.pweb.entity.Disciplina;
-import br.com.ifba.pweb.entity.Sala;
 
 
 public class AulaMapper {

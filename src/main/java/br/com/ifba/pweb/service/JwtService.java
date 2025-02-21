@@ -15,7 +15,7 @@ import io.jsonwebtoken.security.Keys;
 public class JwtService {
 	
 	private final SecretKey keySecret = Keys.secretKeyFor(SignatureAlgorithm.HS256);
-	private final long expiracao = 86400000; //24horas
+	private final long expiracao = 86400000;
 
 	public String gerarToken(String email, String role) {
 		return Jwts.builder()

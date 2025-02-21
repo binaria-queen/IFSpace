@@ -1,6 +1,6 @@
 package br.com.ifba.pweb.entity;
 
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -37,7 +37,7 @@ public class Aula {
     private String diaSemana; 
     
     @Column(nullable = false)
-    private LocalTime horarioInicio;
+    private LocalDateTime horarioInicio;
     
     @Column(nullable = false)
     private int duracao; 

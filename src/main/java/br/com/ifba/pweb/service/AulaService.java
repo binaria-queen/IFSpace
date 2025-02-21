@@ -33,7 +33,16 @@ public class AulaService {
 			}
 		}
 		log.info("alocar() FIM: ");
-		//transformando aula em entidade para armazenar e depois passando para DTO para dar o retorno
 		return AulaMapper.toDTO(repository.save(AulaMapper.toEntity(aula)));
+	}
+
+	public AulaDto editar(AulaDto aula) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void excluir(AulaDto dto) {
+		// TODO Auto-generated method stub
+		
 	}
 }	

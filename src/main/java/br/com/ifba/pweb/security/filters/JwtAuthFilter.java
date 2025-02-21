@@ -13,7 +13,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 
-//adição da anotação
 @Component
 public class JwtAuthFilter extends OncePerRequestFilter {
 
@@ -29,7 +28,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         String token = request.getHeader("Authorization");
 
         if (token != null && jwtService.validarToken(token.replace("Bearer ", ""))) {
-            // Autenticação permitida, falta testar e implementar o restante.
             SecurityContextHolder.getContext().setAuthentication(null); 
         } else {
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Token inválido");

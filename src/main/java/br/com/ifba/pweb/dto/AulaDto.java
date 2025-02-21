@@ -1,11 +1,10 @@
 package br.com.ifba.pweb.dto;
 
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 
 import br.com.ifba.pweb.entity.Disciplina;
 import br.com.ifba.pweb.entity.Sala;
-import jakarta.persistence.Entity;
 
-public record AulaDto(Disciplina disciplina, Sala sala, String diaSemana, LocalTime horarioInicio, int duracao) {
+public record AulaDto(Disciplina disciplina, Sala sala, String diaSemana, LocalDateTime horarioInicio, int duracao) {
 
 }

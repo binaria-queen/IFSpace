@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import br.com.ifba.pweb.dto.AulaDto;
 import br.com.ifba.pweb.entity.Aula;
 
 //estava recebendo AulaDto
