@@ -1,11 +1,13 @@
 package br.com.ifba.pweb.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.ifba.pweb.dto.AulaDto;
+import br.com.ifba.pweb.entity.Aula;
 import br.com.ifba.pweb.mapper.AulaMapper;
 import br.com.ifba.pweb.repository.AulaRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -35,14 +37,32 @@ public class AulaService {
 		log.info("alocar() FIM: ");
 		return AulaMapper.toDTO(repository.save(AulaMapper.toEntity(aula)));
 	}
+	
+	public AulaDto editar(AulaDto aulaDto) {
+        log.info("editar() aulaDto={} ", aulaDto);      
+        Optional<Aula> aulaOptional = repository.findById(aulaDto.id());
+        if (aulaOptional.isPresent()) {
+            //dá pra fazer campo a campo também
+            Aula aula = AulaMapper.toEntity(aulaDto);           
+            Aula aulaAtualizada = repository.save(aula);
+            log.info("editar() FIM: aula atualizada com sucesso.");
+            return AulaMapper.toDTO(aulaAtualizada);
+        } else {
+            log.error("editar() ERRO: Aula não encontrada com o ID {}", aulaDto.id());
+            throw new RuntimeException("Aula não encontrada com o ID " + aulaDto.id());
+        }
+    }
 
-	public AulaDto editar(AulaDto aula) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public void excluir(AulaDto aulaDto) {
+        log.info("excluir() aulaDto={} ", aulaDto);
+        Optional<Aula> aulaOptional = repository.findById(aulaDto.id());
+        if (aulaOptional.isPresent()) {
+            repository.delete(aulaOptional.get());
+        } else {
+            log.error("excluir() ERRO: Aula não encontrada com o ID {}", aulaDto.id());
+            throw new RuntimeException("Aula não encontrada com o ID " + aulaDto.id());
+        }
+    }
+	
 
-	public void excluir(AulaDto dto) {
-		// TODO Auto-generated method stub
-		
-	}
 }	

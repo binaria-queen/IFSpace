@@ -1,12 +1,14 @@
 package br.com.ifba.pweb.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.ifba.pweb.dto.SalaDto;
 import br.com.ifba.pweb.entity.Sala;
+import br.com.ifba.pweb.mapper.SalaMapper;
 import br.com.ifba.pweb.repository.SalaRepository;
 import lombok.extern.slf4j.Slf4j;
 
@@ -34,13 +36,31 @@ public class SalaService {
 		return repository.save(sala);
 	}
 
-	public SalaDto editar(SalaDto disciplina) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public SalaDto editar(SalaDto salaDto) {
+		log.info("editar(): salaDto={} ", salaDto);
+        
+        Optional<Sala> salaOptional = repository.findById(salaDto.id());
+        if (salaOptional.isPresent()) {
+        	Sala sala = SalaMapper.toEntity(salaDto);
+            //dá pra fazer campo a campo também       	          
+            Sala salaAtualizada = repository.save(sala);
+            log.info("editar() FIM: sala atualizada com sucesso.");
+            return SalaMapper.toDTO(salaAtualizada); 
+        } else {
+            log.error("editar() ERRO: Sala não encontrada com o ID {}", salaDto.id());
+            throw new RuntimeException("Sala não encontrada com o ID " + salaDto.id());
+        }
+	}	
 
-	public void excluir(SalaDto dto) {
-		// TODO Auto-generated method stub
-		
+	public void excluir(SalaDto salaDto) {
+		log.info("excluir(): salaDto={} ", salaDto);
+              
+        if (repository.existsById(salaDto.id())) {           
+            repository.deleteById(salaDto.id());
+            log.info("excluir() FIM: sala removida com sucesso.");
+        } else {
+            log.error("excluir() ERRO: Sala não encontrada com o ID {}", salaDto.id());
+            throw new RuntimeException("Sala não encontrada com o ID " + salaDto.id());
+        }
 	}
 }

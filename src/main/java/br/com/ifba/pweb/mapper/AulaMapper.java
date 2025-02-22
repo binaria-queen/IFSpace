@@ -20,6 +20,7 @@ public class AulaMapper {
     
     public static AulaDto toDTO(Aula aula) {
         return new AulaDto(
+        		aula.getId(),
         		aula.getDisciplina(),
         		aula.getSala(),
         		aula.getDiaSemana(),
