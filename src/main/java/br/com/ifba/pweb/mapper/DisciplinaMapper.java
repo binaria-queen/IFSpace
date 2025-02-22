@@ -18,13 +18,33 @@ public class DisciplinaMapper {
 	}
 
 	public static List<DisciplinaDto> toDTOList(List<Disciplina> all) {
-		// TODO Auto-generated method stub
+		List<DisciplinaDto> dtoList = new ArrayList<>();
+        for (Disciplina disciplina : all) {
+            dtoList.add(toDTO(disciplina));
+        }
+        return dtoList;
+	}
+
+	public static Optional<DisciplinaDto> toDto(Optional<Disciplina> byId) {
 		return null;
 	}
 
-	public Optional<DisciplinaDto> toDto(Optional<Disciplina> byId) {
-		// TODO Auto-generated method stub
-		return null;
+	public static Disciplina toEntity(DisciplinaDto disciplinaDto) {
+		return new Disciplina(
+            disciplinaDto.id(),
+            disciplinaDto.nome(),
+            disciplinaDto.codigoTurma(),
+            disciplinaDto.nomeProfessor()
+        );
 	}
+	
+	public static DisciplinaDto toDTO(Disciplina disciplina) {
+        return new DisciplinaDto(
+            disciplina.getId(),
+            disciplina.getNome(),
+            disciplina.getCodigoTurma(),
+            disciplina.getNomeProfessor()
+        );
+    }
 
 }

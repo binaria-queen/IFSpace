@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.ifba.pweb.dto.DisciplinaDto;
+import br.com.ifba.pweb.entity.Disciplina;
 import br.com.ifba.pweb.mapper.DisciplinaMapper;
 import br.com.ifba.pweb.repository.DisciplinaRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -22,24 +23,51 @@ public class DisciplinaService {
 	private DisciplinaMapper mapper;
 	
 	public List<DisciplinaDto> listar(){
-		return mapper.toDTOList(repository.findAll());
+		log.info("listar() FIM: ");
+	    return mapper.toDTOList(repository.findAll());
 	}
 	
 	public Optional<DisciplinaDto> consultarPorId(Long id) {
+		log.info("consultarPorId(): id={} ", id);
 		return mapper.toDto(repository.findById(id));
 		
 	}
 	
-	public DisciplinaDto cadastrar(DisciplinaDto disciplina) {
-		return null;
+	public DisciplinaDto cadastrar(DisciplinaDto disciplinaDto) {
+		log.info("cadastrar(): disciplinaDto={} ", disciplinaDto);
+      
+        Disciplina disciplina = mapper.toEntity(disciplinaDto);
+       
+        Disciplina disciplinaSalva = repository.save(disciplina);
+        log.info("cadastrar() FIM: disciplina cadastrada com sucesso.");
+        return mapper.toDTO(disciplinaSalva); //como os métodos de mapper são estáticos não precisamos de uma instância(DisciplinaMapper.toDto)
 	}
 
-	public DisciplinaDto editar(DisciplinaDto disciplina) {
-		return null;
-	}
+	public DisciplinaDto editar(DisciplinaDto disciplinaDto) {
+		log.info("editar(): disciplinaDto={} ", disciplinaDto);
+       
+        Optional<Disciplina> disciplinaOptional = repository.findById(disciplinaDto.id());
+        if (disciplinaOptional.isPresent()) {            
+            Disciplina disciplina = mapper.toEntity(disciplinaDto);                            
+            Disciplina disciplinaAtualizada = repository.save(disciplina);
+            log.info("editar() FIM: disciplina atualizada com sucesso.");
+            return mapper.toDTO(disciplinaAtualizada);
+        } else {
+            log.error("editar() ERRO: Disciplina não encontrada com o ID {}", disciplinaDto.id());
+            throw new RuntimeException("Disciplina não encontrada com o ID " + disciplinaDto.id());
+        }
+    }
 
-	public void excluir(DisciplinaDto dto) {
-		
+	public void excluir(DisciplinaDto disciplinaDto) {
+		 log.info("excluir(): disciplinaDto={} ", disciplinaDto);
+		 
+	        if (repository.existsById(disciplinaDto.id())) {
+	        	repository.deleteById(disciplinaDto.id());
+	            log.info("excluir() FIM: disciplina removida com sucesso.");
+	        } else {
+	            log.error("excluir() ERRO: Disciplina não encontrada com o ID {}", disciplinaDto.id());
+	            throw new RuntimeException("Disciplina não encontrada com o ID " + disciplinaDto.id());
+	        }
 	}
 
 }
