@@ -3,10 +3,12 @@ package br.com.ifba.pweb.mapper;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.stereotype.Component;
+
 import br.com.ifba.pweb.dto.AulaDto;
 import br.com.ifba.pweb.entity.Aula;
 
-
+@Component
 public class AulaMapper {
 	public static Aula toEntity(AulaDto dto) {
         Aula aula = new Aula();

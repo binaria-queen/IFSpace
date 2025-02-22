@@ -3,9 +3,12 @@ package br.com.ifba.pweb.mapper;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.stereotype.Component;
+
 import br.com.ifba.pweb.dto.SalaDto;
 import br.com.ifba.pweb.entity.Sala;
 
+@Component
 public class SalaMapper {
     public static Sala toEntity(SalaDto dto) {
         Sala sala = new Sala();

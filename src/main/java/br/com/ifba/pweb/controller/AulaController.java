@@ -30,7 +30,7 @@ public class AulaController {
 		return service.listar();
 	}
 	
-	@PostMapping("path")
+	@PostMapping("/alocar")
 	public AulaDto alocar(@RequestBody AulaDto aula) {
 		log.info("alocar() INICIO: ");
 		return service.alocar(aula);

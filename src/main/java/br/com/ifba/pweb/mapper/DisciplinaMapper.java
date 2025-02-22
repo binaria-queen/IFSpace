@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.stereotype.Component;
+
 import br.com.ifba.pweb.dto.DisciplinaDto;
 import br.com.ifba.pweb.entity.Disciplina;
 
+@Component
 public class DisciplinaMapper {
 
 	public static List<DisciplinaDto> add(DisciplinaDto disciplina) {
