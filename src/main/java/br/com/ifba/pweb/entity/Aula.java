@@ -32,7 +32,7 @@ public class Aula {
     @ManyToOne
     @JoinColumn(name = "sala_id", nullable = false)
     private Sala sala;
-    
+    	
     @Column(nullable = false)
     private String diaSemana; 
     

@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import br.com.ifba.pweb.entity.Disciplina;
 import br.com.ifba.pweb.entity.Sala;
 
-public record AulaDto(Long id, Disciplina disciplina, Sala sala, String diaSemana, LocalDateTime horarioInicio, int duracao) {
+//recebendo disciplina e sala id
+public record AulaDto(Long id, Long disciplina_id, Long sala_id, String diaSemana, LocalDateTime horarioInicio, int duracao) {
 
 }
