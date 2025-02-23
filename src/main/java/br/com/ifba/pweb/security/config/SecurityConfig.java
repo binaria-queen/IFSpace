@@ -27,13 +27,8 @@ public class SecurityConfig {
 		return http.csrf(csrf -> csrf.disable())
 	            .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 	            .authorizeHttpRequests(req -> {
-	                req.requestMatchers(HttpMethod.POST, "/auth/login").permitAll();
-	                req.requestMatchers(HttpMethod.POST, "/auth/login").permitAll();
-	                req.requestMatchers(HttpMethod.GET, "/salas/listar").authenticated();
-	                req.requestMatchers(HttpMethod.POST, "/salas/alocar").authenticated();
-	                req.requestMatchers(HttpMethod.PUT, "/salas/editar").authenticated();
-	                req.requestMatchers(HttpMethod.DELETE, "/salas/excluir").authenticated();
-	                req.anyRequest().authenticated();
+	                req.requestMatchers(HttpMethod.POST, "/auth/login").permitAll();	              	                	                             
+	                req.anyRequest().authenticated();	
 	            })
 	            .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
 	            .build();

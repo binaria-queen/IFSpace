@@ -3,6 +3,7 @@ package br.com.ifba.pweb.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,25 +33,18 @@ public class AulaController {
 	}
 	
 	@PostMapping("/alocar")
+	@Secured("ROLE_PROFESSOR")
 	public AulaDto alocar(@RequestBody AulaDto aula) {
 		log.info("alocar() INICIO: ");
 		return service.alocar(aula);
 	}
 	
 	@PutMapping("/editar")
+	@Secured("ROLE_PROFESSOR")
 	public AulaDto editar(@RequestBody AulaDto aula) {
 		log.info("editar() INICIO: ");
 		return service.editar(aula);
 	}
-	
-	//só o id?
-	/*
-	@DeleteMapping("/excluir")
-	public void excluir(@RequestBody AulaDto dto) {
-		log.info("excluir() INICIO: ");
-		service.excluir(dto);
-	}	
-	*/
 	
 	@DeleteMapping("/excluir/{id}")
 	public void excluir(@PathVariable Long id) {

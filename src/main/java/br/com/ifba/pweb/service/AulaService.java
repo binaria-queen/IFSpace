@@ -28,8 +28,6 @@ public class AulaService {
 	@Autowired
 	private DisciplinaRepository disciplinaRepository;
 	@Autowired
-	private AulaRepository aulaRepository;
-	@Autowired
 	private SalaRepository salaRepository;
 
 	
