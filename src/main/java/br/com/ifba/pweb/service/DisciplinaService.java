@@ -70,16 +70,16 @@ public class DisciplinaService {
         }
     }
 
-	public void excluir(DisciplinaDto disciplinaDto) {
-		 log.info("excluir(): disciplinaDto={} ", disciplinaDto);
-		 
-	        if (repository.existsById(disciplinaDto.id())) {
-	        	repository.deleteById(disciplinaDto.id());
-	            log.info("excluir() FIM: disciplina removida com sucesso.");
-	        } else {
-	            log.error("excluir() ERRO: Disciplina não encontrada com o ID {}", disciplinaDto.id());
-	            throw new RuntimeException("Disciplina não encontrada com o ID " + disciplinaDto.id());
-	        }
+	public void excluir(Long id) {
+		log.info("excluir(): id={} ", id);
+              
+        if (repository.existsById(id)) {           
+            repository.deleteById(id);
+            log.info("excluir() FIM: sala removida com sucesso.");
+        } else {
+            log.error("excluir() ERRO: Sala não encontrada com o ID {}", id);
+            throw new RuntimeException("Sala não encontrada com o ID " + id);
+        }
 	}
 
 }
