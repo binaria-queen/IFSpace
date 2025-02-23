@@ -49,7 +49,7 @@ public class AulaController {
 	public void excluir(@RequestBody AulaDto dto) {
 		log.info("excluir() INICIO: ");
 		service.excluir(dto);
-	}
+	}	
 	*/
 	
 	@DeleteMapping("/excluir/{id}")

@@ -33,11 +33,12 @@ public class SalaController {
 		return salas;
 	}
 	
+	//se eu tentar alocar o mesmo id, mas com codigo da sala diferente, acaba criando no próximo id disponível
 	@PostMapping("/alocar")
 	public SalaDto alocar(@RequestBody SalaDto salaDto) {
 		log.info("alocar() INICIO: ");
-		Sala sala = SalaMapper.toEntity(salaDto);
-		return SalaMapper.toDTO(service.alocar(sala));
+		//Sala sala = SalaMapper.toEntity(salaDto);
+		return service.alocar(salaDto);
 	}
 	
 	@PutMapping("/editar")

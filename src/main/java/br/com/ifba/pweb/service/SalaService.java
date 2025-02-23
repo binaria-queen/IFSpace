@@ -24,16 +24,16 @@ public class SalaService {
 		return repository.findAll();
 	}
 	
-	public Sala alocar(Sala sala) {
+	public SalaDto alocar(SalaDto sala) {
 		log.info("alocar(): sala={} ", sala);
 		//existy para exists
-		if(repository.existsByCodigo(sala.getCodigo())) {
+		if(repository.existsByCodigo(sala.codigo())) {
 			log.error("alocar() ERRO: cadastro não realizado por já existir sala com o código definido.");
 			throw new RuntimeException("Código da sala já existe");
 		}
 		
 		log.info("alocar() FIM: ");
-		return repository.save(sala);
+		return SalaMapper.toDTO(repository.save(SalaMapper.toEntity(sala)));
 	}
 
 	public SalaDto editar(SalaDto salaDto) {

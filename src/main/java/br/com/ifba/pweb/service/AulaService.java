@@ -50,7 +50,6 @@ public class AulaService {
 		Disciplina disciplina = disciplinaRepository.findById(aula.disciplina_id())
                 .orElseThrow(() -> new RuntimeException("Disciplina não encontrada!"));
 
-        // Busca a Sala pelo ID
         Sala sala = salaRepository.findById(aula.sala_id())
                 .orElseThrow(() -> new RuntimeException("Sala não encontrada!"));
         
