@@ -35,10 +35,13 @@ public class AulaService {
 	}
 	
 	public AulaDto alocar(AulaDto aula) {
-		log.info("alocar() aula={} ", aula);	
-		//AndDayWeek para AndDiaSemana
+		log.info("alocar() aula={} ", aula);
+		if (aula.duracao() % 50 != 0) {
+	        log.error("alocar() ERRO: A duração da aula deve ser um múltiplo de 50 minutos.");
+	        throw new RuntimeException("A duração da aula deve ser um múltiplo de 50 minutos.");
+	    }
 		List<AulaDto> aulas;		
-		aulas = AulaMapper.toDTOList(repository.findBySalaIdAndDiaSemana(aula.sala_id(),aula.diaSemana()));		 		
+		aulas = AulaMapper.toDTOList(repository.findBySalaIdAndDiaSemana(aula.sala_id(),aula.diaSemana()));	
 			
 		for (AulaDto a : aulas) {
 			if(a.horarioInicio().equals(aula.horarioInicio())) {
@@ -82,18 +85,6 @@ public class AulaService {
         }
     }
 	
-	/*
-    public void excluir(AulaDto aulaDto) {
-        log.info("excluir() aulaDto={} ", aulaDto);
-        Optional<Aula> aulaOptional = repository.findById(aulaDto.id());
-        if (aulaOptional.isPresent()) {
-            repository.delete(aulaOptional.get());
-        } else {
-            log.error("excluir() ERRO: Aula não encontrada com o ID {}", aulaDto.id());
-            throw new RuntimeException("Aula não encontrada com o ID " + aulaDto.id());
-        }
-    }
-    */
 	
     public void excluir(Long id) {
         log.info("excluir() id={} ", id);
