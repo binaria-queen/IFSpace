@@ -37,13 +37,14 @@ public class AulaController {
 	}
 	
 	@PutMapping("/editar")
-	public AulaDto editar(AulaDto aula) {
+	public AulaDto editar(@RequestBody AulaDto aula) {
 		log.info("editar() INICIO: ");
 		return service.editar(aula);
 	}
 	
+	//só o id?
 	@DeleteMapping("/excluir")
-	public void excluir(AulaDto dto) {
+	public void excluir(@RequestBody AulaDto dto) {
 		log.info("excluir() INICIO: ");
 		service.excluir(dto);
 	}

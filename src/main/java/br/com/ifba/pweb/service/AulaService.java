@@ -63,10 +63,17 @@ public class AulaService {
 	public AulaDto editar(AulaDto aulaDto) {
         log.info("editar() aulaDto={} ", aulaDto);      
         Optional<Aula> aulaOptional = repository.findById(aulaDto.id());
-        if (aulaOptional.isPresent()) {
-        	AulaMapper mapper = new AulaMapper(disciplinaRepository, salaRepository);
-            //dá pra fazer campo a campo também
-            Aula aula = mapper.toEntity(aulaDto);           
+        if (aulaOptional.isPresent()) {            
+            Aula aula = aulaOptional.get();
+            
+        	aula.setDisciplina(disciplinaRepository.findById(aulaDto.disciplina_id())
+                    .orElseThrow(() -> new RuntimeException("Disciplina não encontrada!")));
+            aula.setSala(salaRepository.findById(aulaDto.sala_id())
+                    .orElseThrow(() -> new RuntimeException("Sala não encontrada!")));
+            aula.setDiaSemana(aulaDto.diaSemana());
+            aula.setHorarioInicio(aulaDto.horarioInicio());
+            aula.setDuracao(aulaDto.duracao());
+            
             Aula aulaAtualizada = repository.save(aula);
             log.info("editar() FIM: aula atualizada com sucesso.");
             return AulaMapper.toDTO(aulaAtualizada);
