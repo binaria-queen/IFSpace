@@ -27,10 +27,11 @@ public class DisciplinaMapper {
         }
         return dtoList;
 	}
-
-	public static Optional<DisciplinaDto> toDto(Optional<Disciplina> byId) {
+	
+	public static DisciplinaDto toDto(Optional<Disciplina> optional) {
 		return null;
 	}
+	
 
 	public static Disciplina toEntity(DisciplinaDto disciplinaDto) {
 		return new Disciplina(

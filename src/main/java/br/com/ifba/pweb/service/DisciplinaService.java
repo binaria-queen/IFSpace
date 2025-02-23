@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 
 import br.com.ifba.pweb.dto.DisciplinaDto;
 import br.com.ifba.pweb.entity.Disciplina;
+import br.com.ifba.pweb.entity.Sala;
 import br.com.ifba.pweb.mapper.DisciplinaMapper;
+import br.com.ifba.pweb.mapper.SalaMapper;
 import br.com.ifba.pweb.repository.DisciplinaRepository;
 import lombok.extern.slf4j.Slf4j;
 
@@ -27,9 +29,19 @@ public class DisciplinaService {
 	    return mapper.toDTOList(repository.findAll());
 	}
 	
-	public Optional<DisciplinaDto> consultarPorId(Long id) {
+	public DisciplinaDto consultarPorId(Long id) {
 		log.info("consultarPorId(): id={} ", id);
-		return mapper.toDto(repository.findById(id));
+		
+		Optional<Disciplina> disciplinaOptional = repository.findById(id);
+		
+		if (disciplinaOptional.isPresent()) {
+			Disciplina disciplina = disciplinaOptional.get();    
+			log.info("consultarPorId() FIM: Id localizado com sucesso.");
+			return DisciplinaMapper.toDTO(disciplinaOptional.get());
+        } else {
+            log.error("consultarPorId() ERRO: Disciplina não encontrada com o ID {}", id);
+            throw new RuntimeException("Disciplina não encontrada com o ID " + id);
+        }
 		
 	}
 	

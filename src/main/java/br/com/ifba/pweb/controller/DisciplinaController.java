@@ -32,11 +32,11 @@ public class DisciplinaController {
 		return service.listar();
 	}
 	
-	@GetMapping("/consultar/{id}")
-	public Optional<DisciplinaDto> consultarPorId(@RequestParam Long id){
+	@GetMapping("/consultar")
+	public DisciplinaDto consultarPorId(@RequestParam Long id){
 		log.info("consultarPorId() INICIO: ");
 		return service.consultarPorId(id);
-	}
+	}	
 	
 	@PostMapping("/cadastrar")
 	public ResponseEntity<DisciplinaDto> cadastrar(@RequestBody DisciplinaDto dto){
