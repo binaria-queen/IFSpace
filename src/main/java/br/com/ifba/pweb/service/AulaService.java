@@ -10,6 +10,7 @@ import br.com.ifba.pweb.dto.AulaDto;
 import br.com.ifba.pweb.entity.Aula;
 import br.com.ifba.pweb.entity.Disciplina;
 import br.com.ifba.pweb.entity.Sala;
+import br.com.ifba.pweb.exception.DuracaoInvalidaException;
 import br.com.ifba.pweb.mapper.AulaMapper;
 import br.com.ifba.pweb.repository.AulaRepository;
 import br.com.ifba.pweb.repository.DisciplinaRepository;
@@ -38,7 +39,7 @@ public class AulaService {
 		log.info("alocar() aula={} ", aula);
 		if (aula.duracao() % 50 != 0) {
 	        log.error("alocar() ERRO: A duração da aula deve ser um múltiplo de 50 minutos.");
-	        throw new RuntimeException("A duração da aula deve ser um múltiplo de 50 minutos.");
+	        throw new DuracaoInvalidaException("A duração da aula deve ser um múltiplo de 50 minutos.");
 	    }
 		List<AulaDto> aulas;		
 		aulas = AulaMapper.toDTOList(repository.findBySalaIdAndDiaSemana(aula.sala_id(),aula.diaSemana()));	
