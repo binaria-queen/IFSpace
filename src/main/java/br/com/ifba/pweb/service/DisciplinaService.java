@@ -60,10 +60,15 @@ public class DisciplinaService {
        
         Optional<Disciplina> disciplinaOptional = repository.findById(disciplinaDto.id());
         if (disciplinaOptional.isPresent()) {            
-            Disciplina disciplina = mapper.toEntity(disciplinaDto);                            
+        	Disciplina disciplina = disciplinaOptional.get();
+            
+            disciplina.setNome(disciplinaDto.nome());
+            disciplina.setCodigoTurma(disciplinaDto.codigoTurma());
+            disciplina.setNomeProfessor(disciplinaDto.nomeProfessor());
+            
             Disciplina disciplinaAtualizada = repository.save(disciplina);
             log.info("editar() FIM: disciplina atualizada com sucesso.");
-            return mapper.toDTO(disciplinaAtualizada);
+            return DisciplinaMapper.toDTO(disciplinaAtualizada);
         } else {
             log.error("editar() ERRO: Disciplina não encontrada com o ID {}", disciplinaDto.id());
             throw new RuntimeException("Disciplina não encontrada com o ID " + disciplinaDto.id());
