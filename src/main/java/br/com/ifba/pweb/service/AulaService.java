@@ -64,7 +64,13 @@ public class AulaService {
 	}
 	
 	public AulaDto editar(AulaDto aulaDto) {
-        log.info("editar() aulaDto={} ", aulaDto);      
+        log.info("editar() aulaDto={} ", aulaDto);
+        
+        if (aulaDto.duracao() % 50 != 0) {
+            log.error("editar() ERRO: A duração da aula deve ser um múltiplo de 50 minutos.");
+            throw new DuracaoInvalidaException("A duração da aula deve ser um múltiplo de 50 minutos.");
+        }
+
         Optional<Aula> aulaOptional = repository.findById(aulaDto.id());
         if (aulaOptional.isPresent()) {            
             Aula aula = aulaOptional.get();
