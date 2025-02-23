@@ -1,5 +1,6 @@
 package br.com.ifba.pweb.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -10,6 +11,7 @@ import br.com.ifba.pweb.dto.AulaDto;
 import br.com.ifba.pweb.entity.Aula;
 import br.com.ifba.pweb.entity.Disciplina;
 import br.com.ifba.pweb.entity.Sala;
+import br.com.ifba.pweb.exception.ConflitoHorarioException;
 import br.com.ifba.pweb.exception.DuracaoInvalidaException;
 import br.com.ifba.pweb.mapper.AulaMapper;
 import br.com.ifba.pweb.repository.AulaRepository;
@@ -35,32 +37,41 @@ public class AulaService {
 		return AulaMapper.toDTOList(repository.findAll());
 	}
 	
-	public AulaDto alocar(AulaDto aula) {
-		log.info("alocar() aula={} ", aula);
-		if (aula.duracao() % 50 != 0) {
+	public AulaDto alocar(AulaDto aulaDto) {
+		log.info("alocar() aula={} ", aulaDto);
+
+	    if (aulaDto.duracao() % 50 != 0) {
 	        log.error("alocar() ERRO: A duração da aula deve ser um múltiplo de 50 minutos.");
 	        throw new DuracaoInvalidaException("A duração da aula deve ser um múltiplo de 50 minutos.");
 	    }
-		List<AulaDto> aulas;		
-		aulas = AulaMapper.toDTOList(repository.findBySalaIdAndDiaSemana(aula.sala_id(),aula.diaSemana()));	
-			
-		for (AulaDto a : aulas) {
-			if(a.horarioInicio().equals(aula.horarioInicio())) {
-				log.error("alocar() ERRO: Não foi possível alocar aula por sala encontrar-se ocupada.");
-				throw new RuntimeException("Atenção! Conflito detectado, pois sala encontra-se ocupada.");
-			}
-		}
-		
-		Disciplina disciplina = disciplinaRepository.findById(aula.disciplina_id())
-                .orElseThrow(() -> new RuntimeException("Disciplina não encontrada!"));
+	    
+	    Disciplina disciplina = disciplinaRepository.findById(aulaDto.disciplina_id())
+		        .orElseThrow(() -> new RuntimeException("Disciplina não encontrada!"));
+		    Sala sala = salaRepository.findById(aulaDto.sala_id())
+		        .orElseThrow(() -> new RuntimeException("Sala não encontrada!"));
 
-        Sala sala = salaRepository.findById(aula.sala_id())
-                .orElseThrow(() -> new RuntimeException("Sala não encontrada!"));
-        
+	    List<Aula> aulasNaSala = repository.findBySalaIdAndDiaSemana(
+	        aulaDto.sala_id(), 
+	        aulaDto.diaSemana()
+	    );
+	    
+	    LocalDateTime inicioNovaAula = aulaDto.horarioInicio();
+	    LocalDateTime fimNovaAula = inicioNovaAula.plusMinutes(aulaDto.duracao());
+	    
+
+	    for (Aula aulaExistente : aulasNaSala) {
+	        LocalDateTime inicioExistente = aulaExistente.getHorarioInicio();
+	        LocalDateTime fimExistente = inicioExistente.plusMinutes(aulaExistente.getDuracao());
+
+	        if (inicioNovaAula.isBefore(fimExistente) && fimNovaAula.isAfter(inicioExistente)) {
+	            log.error("alocar() ERRO: Conflito de horário na sala {}", aulaDto.sala_id());
+	            throw new ConflitoHorarioException("A sala já está ocupada neste horário");
+	        }
+	    }
 		
 		log.info("alocar() FIM: ");
 		AulaMapper mapper = new AulaMapper(disciplinaRepository, salaRepository); //tendo que instanciar agora que toEntity não é estático
-		return AulaMapper.toDTO(repository.save(mapper.toEntity(aula)));
+		return AulaMapper.toDTO(repository.save(mapper.toEntity(aulaDto)));
 	}
 	
 	public AulaDto editar(AulaDto aulaDto) {
@@ -83,6 +94,27 @@ public class AulaService {
             aula.setHorarioInicio(aulaDto.horarioInicio());
             aula.setDuracao(aulaDto.duracao());
             
+            List<Aula> aulasNaSala = repository.findBySalaIdAndDiaSemana(
+                    aulaDto.sala_id(), 
+                    aulaDto.diaSemana()
+            );
+            
+            //não verificar a própria aula	
+            aulasNaSala.removeIf(a -> a.getId().equals(aulaDto.id()));
+            
+            LocalDateTime inicioNovaAula = aulaDto.horarioInicio();
+            LocalDateTime fimNovaAula = inicioNovaAula.plusMinutes(aulaDto.duracao());
+
+            for (Aula aulaExistente : aulasNaSala) {
+                LocalDateTime inicioExistente = aulaExistente.getHorarioInicio();
+                LocalDateTime fimExistente = inicioExistente.plusMinutes(aulaExistente.getDuracao());
+
+                if (inicioNovaAula.isBefore(fimExistente) && fimNovaAula.isAfter(inicioExistente)) {
+                    log.error("editar() ERRO: Conflito de horário na sala {}", aulaDto.sala_id());
+                    throw new ConflitoHorarioException("A sala já está ocupada neste horário");
+                }
+            }
+            
             Aula aulaAtualizada = repository.save(aula);
             log.info("editar() FIM: aula atualizada com sucesso.");
             return AulaMapper.toDTO(aulaAtualizada);
@@ -90,6 +122,8 @@ public class AulaService {
             log.error("editar() ERRO: Aula não encontrada com o ID {}", aulaDto.id());
             throw new RuntimeException("Aula não encontrada com o ID " + aulaDto.id());
         }
+        
+        
     }
 	
 	

@@ -36,7 +36,7 @@ public class Aula {
     @Column(nullable = false)
     private String diaSemana; 
     
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TIMESTAMP")
     private LocalDateTime horarioInicio;
     
     @Column(nullable = false)
