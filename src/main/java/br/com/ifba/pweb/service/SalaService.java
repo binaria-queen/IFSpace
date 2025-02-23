@@ -41,26 +41,29 @@ public class SalaService {
         
         Optional<Sala> salaOptional = repository.findById(salaDto.id());
         if (salaOptional.isPresent()) {
-        	Sala sala = SalaMapper.toEntity(salaDto);
-            //dá pra fazer campo a campo também       	          
+        	Sala sala = salaOptional.get();
+            
+            sala.setCodigo(salaDto.codigo());
+            sala.setNome(salaDto.nome());
+            
             Sala salaAtualizada = repository.save(sala);
             log.info("editar() FIM: sala atualizada com sucesso.");
-            return SalaMapper.toDTO(salaAtualizada); 
+            return SalaMapper.toDTO(salaAtualizada);
         } else {
             log.error("editar() ERRO: Sala não encontrada com o ID {}", salaDto.id());
             throw new RuntimeException("Sala não encontrada com o ID " + salaDto.id());
         }
 	}	
 
-	public void excluir(SalaDto salaDto) {
-		log.info("excluir(): salaDto={} ", salaDto);
+	public void excluir(Long id) {
+		log.info("excluir(): id={} ", id);
               
-        if (repository.existsById(salaDto.id())) {           
-            repository.deleteById(salaDto.id());
+        if (repository.existsById(id)) {           
+            repository.deleteById(id);
             log.info("excluir() FIM: sala removida com sucesso.");
         } else {
-            log.error("excluir() ERRO: Sala não encontrada com o ID {}", salaDto.id());
-            throw new RuntimeException("Sala não encontrada com o ID " + salaDto.id());
+            log.error("excluir() ERRO: Sala não encontrada com o ID {}", id);
+            throw new RuntimeException("Sala não encontrada com o ID " + id);
         }
 	}
 }
