@@ -82,7 +82,8 @@ public class AulaService {
             throw new RuntimeException("Aula não encontrada com o ID " + aulaDto.id());
         }
     }
-
+	
+	/*
     public void excluir(AulaDto aulaDto) {
         log.info("excluir() aulaDto={} ", aulaDto);
         Optional<Aula> aulaOptional = repository.findById(aulaDto.id());
@@ -91,6 +92,20 @@ public class AulaService {
         } else {
             log.error("excluir() ERRO: Aula não encontrada com o ID {}", aulaDto.id());
             throw new RuntimeException("Aula não encontrada com o ID " + aulaDto.id());
+        }
+    }
+    */
+	
+    public void excluir(Long id) {
+        log.info("excluir() id={} ", id);
+     
+        Optional<Aula> aulaOptional = repository.findById(id);
+        if (aulaOptional.isPresent()) {            
+            repository.delete(aulaOptional.get());
+            log.info("excluir() FIM: aula removida com sucesso.");
+        } else {
+            log.error("excluir() ERRO: Aula não encontrada com o ID {}", id);
+            throw new RuntimeException("Aula não encontrada com o ID " + id);
         }
     }
 	

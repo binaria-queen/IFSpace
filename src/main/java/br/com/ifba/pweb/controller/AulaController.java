@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -43,11 +44,18 @@ public class AulaController {
 	}
 	
 	//só o id?
+	/*
 	@DeleteMapping("/excluir")
 	public void excluir(@RequestBody AulaDto dto) {
 		log.info("excluir() INICIO: ");
 		service.excluir(dto);
 	}
+	*/
 	
-	
+	@DeleteMapping("/excluir/{id}")
+	public void excluir(@PathVariable Long id) {
+	    log.info("excluir() INICIO: ");
+	    service.excluir(id);
+	}
+
 }
