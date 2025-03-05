@@ -1,0 +1,18 @@
+<div class="container">
+    <h2>Lista de Salas</h2>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nome</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let sala of salas">
+          <td>{{ sala.id }}</td>
+          <td>{{ sala.nome }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

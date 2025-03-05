@@ -1,0 +1,15 @@
+<div class="login-container">
+    <h2>Login</h2>
+    <form (submit)="fazerLogin()">
+      <label>Email:</label>
+      <input type="email" [(ngModel)]="email" required />
+  
+      <label>Senha:</label>
+      <input type="password" [(ngModel)]="senha" required />
+  
+      <button type="submit">Entrar</button>
+    </form>
+  
+    <p *ngIf="erro" class="erro">{{ erro }}</p>
+  </div>
+  
