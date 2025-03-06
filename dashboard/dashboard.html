@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> <!-- CDN FontAwesome -->
+</head>
+<body>
+    <div class="container-dashboard">
+        <header>
+            <h1>Bem-vindo ao Dashboard</h1>
+            <p id="usuarioSaudacao">Olá, <span id="usuarioNome">Usuário</span>!</p>
+            <button id="darkModeToggle">🌙</button>
+        </header>
+
+        
+        <div class="section">
+            <div class="card">
+                <a href="../salas/salas.html" class="section-link">
+                    <i class="fas fa-chalkboard"></i> 
+                    <h3>Salas</h3>
+                </a>
+            </div>
+            <div class="card">
+                <a href="../aulas/aulas.html" class="section-link">
+                    <i class="fas fa-book-reader"></i> 
+                    <h3>Aulas</h3>
+                </a>
+            </div>
+            <div class="card">
+                <a href="../disciplinas/disciplinas.html" class="section-link">
+                    <i class="fas fa-clipboard-list"></i>
+                    <h3>Disciplinas</h3>
+                </a>
+            </div>
+        </div>
+
+        <footer>
+            <p>© 2025 Dashboard - Todos os direitos reservados</p>
+        </footer>
+    </div>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>

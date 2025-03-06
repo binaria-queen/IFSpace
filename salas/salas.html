@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salas</title>
+    <link rel="stylesheet" href="salas.css">
+</head>
+<body>
+    <div class="container-dashboard">
+        <header>
+            <h1>Gestão de Salas</h1>
+        </header>
+
+        <div class="section">
+            <div class="room-card">
+                <span>Nome da Sala 1</span>
+                <button class="edit-btn" onclick="openEditModal()">Editar</button>
+                <button class="delete-btn">Excluir</button>
+            </div>
+            <div class="room-card">
+                <span>Nome da Sala 2</span>
+                <button class="edit-btn" onclick="openEditModal()">Editar</button>
+                <button class="delete-btn">Excluir</button>
+            </div>
+            <div class="room-card">
+                <span>Nome da Sala 3</span>
+                <button class="edit-btn" onclick="openEditModal()">Editar</button>
+                <button class="delete-btn">Excluir</button>
+            </div>
+        </div>
+
+        <footer>
+            <p>© 2025 Dashboard - Todos os direitos reservados</p>
+        </footer>
+    </div>
+
+    <!-- Botão Criar Sala -->
+    <button class="action-btn">Criar Sala</button>
+
+   <!-- Modal Criar Sala -->
+<div id="create-room-modal" class="modal">
+    <div class="modal-content">
+        <span id="close-create-modal" class="close-btn">&times;</span>
+        <h2>Criar Nova Sala</h2>
+        <label for="room-code">Código:</label>
+        <input type="text" id="room-code" placeholder="Digite o código da sala" />
+        <label for="room-name">Nome:</label>
+        <input type="text" id="room-name" placeholder="Digite o nome da sala" />
+        <button id="submit-room">Criar</button>
+        <button id="cancel-room">Cancelar</button>
+    </div>
+</div>
+
+<!-- Modal Editar Sala -->
+<div id="edit-room-modal" class="modal">
+    <div class="modal-content">
+        <span id="close-edit-modal" class="close-btn">&times;</span>
+        <h2>Editar Sala</h2>
+        <label for="edit-room-code">Código:</label>
+        <input type="text" id="edit-room-code" disabled /> 
+        <label for="edit-room-name">Nome:</label>
+        <input type="text" id="edit-room-name" /> 
+        <button id="save-room">Salvar</button>
+        <button id="cancel-edit">Cancelar</button>
+    </div>
+</div>
+
+
+
+    <script src="salas.js"></script>
+</body>
+</html>

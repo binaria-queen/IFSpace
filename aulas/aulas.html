@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestão de Aulas</title>
+    <link rel="stylesheet" href="aulas.css">
+</head>
+<body>
+
+    <header>
+        <h1>Gestão de Aulas</h1>
+        <button id="open-modal-aula" class="action-btn">Criar Aula</button>
+    </header>
+
+    <section class="section-aulas"></section>
+
+    <!-- Modal para criação de aulas -->
+    <div id="modal-aula" class="modal">
+        <div class="modal-content">
+            <span id="close-modal-aula" class="close">&times;</span>
+            <h2 id="modal-title">Criar Aula</h2>
+            <form id="form-aula">
+                <label for="disciplina">Disciplina:</label>
+                <input type="text" id="disciplina" required>
+
+                <label for="sala">Sala:</label>
+                <input type="text" id="sala" required>
+
+                <label for="diaSemana">Dia da Semana:</label>
+                <select id="diaSemana" required>
+                    <option value="Segunda">Segunda-feira</option>
+                    <option value="Terça">Terça-feira</option>
+                    <option value="Quarta">Quarta-feira</option>
+                    <option value="Quinta">Quinta-feira</option>
+                    <option value="Sexta">Sexta-feira</option>
+                </select>
+
+                <label for="horarioInicio">Horário de Início:</label>
+                <input type="time" id="horarioInicio" required>
+
+                <label for="duracao">Duração (minutos):</label>
+                <input type="number" id="duracao" required>
+
+                <button type="button" id="submit-aula">Salvar</button>
+                <button type="button" id="cancel-aula">Cancelar</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="aulas.js"></script>
+
+    <footer>
+        <p>© 2025 Dashboard - Todos os direitos reservados</p>
+    </footer>
+</body>
+</html>

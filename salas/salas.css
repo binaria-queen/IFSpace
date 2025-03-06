@@ -1,0 +1,317 @@
+/* Estilos gerais */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Cabeçalho (Gestão de Salas) */
+header {
+    background-color: #9c4dcc;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+header h1 {
+    margin: 0;
+}
+
+/* Cabeçalho quando rola a página (mais claro) */
+header.scrolled {
+    background-color: #d1a6ff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Container do Dashboard */
+.container-dashboard {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    flex: 1;
+    overflow-y: auto;
+    width: 100%;
+    margin-top: 80px;
+    padding-bottom: 70px;
+}
+
+/* Seção de Listagem de Salas */
+.section {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+    overflow-y: auto;
+}
+
+/* Card de Sala */
+.room-card {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.3s ease;
+}
+
+.room-card:hover {
+    transform: translateY(-10px);
+}
+
+/* Título do Card */
+.room-card span {
+    display: block;
+    font-size: 1.2em;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+/* Botões de Ação */
+.room-card button {
+    padding: 8px 12px;
+    margin-top: 10px;
+    border: none;
+    cursor: pointer;
+    font-size: 1em;
+    width: 100%;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+/* Botão Editar */
+.room-card .edit-btn {
+    background-color: #6a1b9a;
+    color: white;
+}
+
+.room-card .edit-btn:hover {
+    background-color: #9c4dcc;
+}
+
+/* Botão Excluir */
+.room-card .delete-btn {
+    background-color: #f44336;
+    color: white;
+}
+
+.room-card .delete-btn:hover {
+    background-color: #e53935;
+}
+
+/* Botão Criar Sala */
+.action-btn {
+    background-color: #6a1b9a;
+    color: white;
+    padding: 6px 12px;
+    border: none;
+    font-size: 0.9em;
+    cursor: pointer;
+    max-width: 150px;
+    margin: 0 0 20px 0;
+    display: block;
+    border-radius: 5px;
+    text-align: center;
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.action-btn:hover {
+    background-color: #9c4dcc;
+}
+
+/* Estilo para o footer */
+footer {
+    background-color: #8e44ad;
+    color: white;
+    text-align: center;
+    padding: 15px 0;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+}
+
+/* Responsividade */
+@media screen and (max-width: 768px) {
+    .section {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .section {
+        grid-template-columns: 1fr;
+    }
+
+    .action-btn {
+        max-width: 100%;
+    }
+}
+
+/* Estilo para o modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    overflow: auto;
+    transition: opacity 0.3s ease-in-out;
+}
+
+/* Conteúdo do modal */
+.modal-content {
+    width: 90%;
+    max-width: 500px;
+    margin: 50px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.modal.show .modal-content {
+    transform: translateY(0);
+}
+
+/* Melhorando a responsividade dos cards */
+@media (max-width: 768px) {
+    .room-card {
+        width: 100%;
+        box-sizing: border-box;
+    }
+}
+
+/* Botão de fechar (X) */
+.close-btn {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Ajustes nos botões */
+button {
+    margin-top: 10px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+/* Garantir que os campos de entrada fiquem em blocos */
+.modal-content label,
+.modal-content input {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+}
+
+/* Adiciona mais espaçamento entre o botão de criar e o de cancelar */
+#submit-room, #cancel-room {
+    width: 100%;
+}
+
+/* Estilo do botão */
+#submit-room {
+    background-color: #d1a6ff;
+    color: white;
+}
+
+#cancel-room {
+    background-color: #f44336;
+    color: white;
+}
+
+/* Mostrar o modal */
+.modal.show {
+    display: block;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 1;
+}
+
+/* Conteúdo do modal de Edição */
+.modal-edit-content {
+    width: 90%;
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Botão de Fechar (X) */
+.close-edit-btn {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-edit-btn:hover,
+.close-edit-btn:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Ajustes nos botões do modal de edição */
+#submit-edit-room,
+#cancel-edit-room {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+#submit-edit-room {
+    background-color: #6a1b9a;
+    color: white;
+}
+
+#cancel-edit-room {
+    background-color: #f44336;
+    color: white;
+}
+
+/* Modal de Edição */
+.modal-edit {
+    display: none; /* Esconde o modal inicialmente */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Fundo semitransparente */
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-edit.show {
+    display: flex; /* Exibe o modal quando a classe show for adicionada */
+}

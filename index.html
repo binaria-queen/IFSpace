@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="image-container">
+            <img src="image.png" alt="Imagem de Login">
+        </div>
+        <div class="login-container">
+            <h1>Sistema Acadêmico IFBA</h1>
+            <h2>Login</h2>
+            <form id="loginForm">
+                <div class="input-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="input-group">
+                    <label for="senha">Senha:</label>
+                    <input type="password" id="senha" required>
+                </div>
+                <button type="submit">Entrar</button>
+                
+            </form>
+            <p id="mensagemErro" class="erro"></p>
+
+            <!-- Botão de alternância para modo escuro -->
+            <button id="darkModeToggle" class="dark-mode-btn">&#9789;</button> <!-- Ícone de sol -->
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
