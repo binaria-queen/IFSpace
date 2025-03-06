@@ -2,6 +2,7 @@ package br.com.ifba.pweb.service;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -150,24 +151,47 @@ public class AulaService {
     }
     
     private boolean existeConflitoNoMesmoDiaSemana(AulaDto aulaDto) {
-        List<Aula> aulasNoMesmoDiaSemana = repository.findByDiaSemanaAndHorarioInicio(
-            aulaDto.diaSemana(), 
-            aulaDto.horarioInicio()
-        );
-
-        LocalDateTime inicioNovaAula = aulaDto.horarioInicio();
-        LocalDateTime fimNovaAula = inicioNovaAula.plusMinutes(aulaDto.duracao());
+        List<Aula> aulasNoMesmoDiaSemana = repository.findByDiaSemanaAndSalaId(aulaDto.diaSemana(), aulaDto.sala_id());
+        int inicioNova = toMinutes(aulaDto.horarioInicio().toLocalTime());
+        int fimNova = inicioNova + aulaDto.duracao();
 
         for (Aula aulaExistente : aulasNoMesmoDiaSemana) {
-            LocalDateTime inicioExistente = aulaExistente.getHorarioInicio();
-            LocalDateTime fimExistente = inicioExistente.plusMinutes(aulaExistente.getDuracao());
-
-            if (inicioNovaAula.isBefore(fimExistente) && fimNovaAula.isAfter(inicioExistente)) {
-                return true; 
+            int inicioExistente = toMinutes(aulaExistente.getHorarioInicio().toLocalTime());
+            int fimExistente = inicioExistente + aulaExistente.getDuracao();
+            if (intervalosSeSobrepoem(inicioNova, fimNova, inicioExistente, fimExistente)) {
+                return true;
             }
         }
-
         return false;
+    }
+
+    private int toMinutes(LocalTime time) {
+        return time.getHour() * 60 + time.getMinute();
+    }
+
+    private boolean intervalosSeSobrepoem(int inicio1, int fim1, int inicio2, int fim2) {
+        List<int[]> segmentos1 = splitInterval(inicio1, fim1);
+        List<int[]> segmentos2 = splitInterval(inicio2, fim2);
+
+        for (int[] seg1 : segmentos1) {
+            for (int[] seg2 : segmentos2) {
+                if (seg1[0] < seg2[1] && seg1[1] > seg2[0]) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private List<int[]> splitInterval(int inicio, int fim) {
+        List<int[]> segmentos = new ArrayList<>();
+        if (fim <= 1440) {
+            segmentos.add(new int[]{inicio, fim});
+        } else {
+        	segmentos.add(new int[]{inicio, 1440});
+            segmentos.add(new int[]{0, fim - 1440});
+        }
+        return segmentos;
     }
 	
 }	
