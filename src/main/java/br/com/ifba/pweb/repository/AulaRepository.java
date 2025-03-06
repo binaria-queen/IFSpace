@@ -8,11 +8,11 @@ import org.springframework.stereotype.Repository;
 
 import br.com.ifba.pweb.entity.Aula;
 
-//estava recebendo AulaDto
-
 @Repository
 public interface AulaRepository extends JpaRepository<Aula, Long> {
-	//mudei o método de DayWeek para DiaSemana(como está na entidade)
 	List<Aula> findBySalaIdAndDiaSemanaAndHorarioInicio(Long salaId, String diaSemana, LocalDateTime horarioInicio);
 	List<Aula> findBySalaIdAndDiaSemana(Long salaId, String diaSemana);
+	List<Aula> findByDiaSemanaAndHorarioInicio(String diaSemana, LocalDateTime horarioInicio);
+	List<Aula> findByDiaSemana(String diaSemana);
+	List<Aula> findByDiaSemanaAndSalaId(String diaSemana, Long salaId);
 }

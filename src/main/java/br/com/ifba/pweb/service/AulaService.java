@@ -1,6 +1,7 @@
 package br.com.ifba.pweb.service;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,6 +48,11 @@ public class AulaService {
 		        .orElseThrow(() -> new RuntimeException("Disciplina não encontrada!"));
 		    Sala sala = salaRepository.findById(aulaDto.sala_id())
 		        .orElseThrow(() -> new RuntimeException("Sala não encontrada!"));
+		    
+	    if (existeConflitoNoMesmoDiaSemana(aulaDto)) {
+	        log.error("alocar() ERRO: Conflito de horário no mesmo dia da semana.");
+	        throw new ConflitoHorarioException("Já existe uma aula no mesmo dia da semana e horário.");
+	    }
 
 	    List<Aula> aulasNaSala = repository.findBySalaIdAndDiaSemana(
 	        aulaDto.sala_id(), 
@@ -91,6 +97,11 @@ public class AulaService {
             aula.setDiaSemana(aulaDto.diaSemana());
             aula.setHorarioInicio(aulaDto.horarioInicio());
             aula.setDuracao(aulaDto.duracao());
+            
+            if (existeConflitoNoMesmoDiaSemana(aulaDto)) {
+                log.error("editar() ERRO: Conflito de horário no mesmo dia da semana.");
+                throw new ConflitoHorarioException("Já existe uma aula no mesmo dia da semana e horário.");
+            }
             
             List<Aula> aulasNaSala = repository.findBySalaIdAndDiaSemana(
                     aulaDto.sala_id(), 
@@ -137,6 +148,26 @@ public class AulaService {
             throw new RuntimeException("Aula não encontrada com o ID " + id);
         }
     }
-	
+    
+    private boolean existeConflitoNoMesmoDiaSemana(AulaDto aulaDto) {
+        List<Aula> aulasNoMesmoDiaSemana = repository.findByDiaSemanaAndHorarioInicio(
+            aulaDto.diaSemana(), 
+            aulaDto.horarioInicio()
+        );
 
+        LocalDateTime inicioNovaAula = aulaDto.horarioInicio();
+        LocalDateTime fimNovaAula = inicioNovaAula.plusMinutes(aulaDto.duracao());
+
+        for (Aula aulaExistente : aulasNoMesmoDiaSemana) {
+            LocalDateTime inicioExistente = aulaExistente.getHorarioInicio();
+            LocalDateTime fimExistente = inicioExistente.plusMinutes(aulaExistente.getDuracao());
+
+            if (inicioNovaAula.isBefore(fimExistente) && fimNovaAula.isAfter(inicioExistente)) {
+                return true; 
+            }
+        }
+
+        return false;
+    }
+	
 }	

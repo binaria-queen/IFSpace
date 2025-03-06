@@ -7,7 +7,6 @@ import br.com.ifba.pweb.entity.Sala;
 
 @Repository
 public interface SalaRepository extends JpaRepository<Sala, Long>{
-	//mudei de existy para exists
 	boolean existsByCodigo(String codigo);
 
 }
